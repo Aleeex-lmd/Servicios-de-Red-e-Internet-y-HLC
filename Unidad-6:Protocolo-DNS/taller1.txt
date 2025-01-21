@@ -1,0 +1,134 @@
+h1. Taller 1
+
+h2. Ejercicio 1
+
+- La primera consulta a tardado en realizarse 528 msec
+
+-  Se realizaron consultas a los servidores raíz, servidores de nombres de .es, servidores autoritativos de marca.es y finalmente a dns02.elmundo.es para obtener la dirección IP de www.marca.es.
+
+- La segunda tardo 4 msec
+
+- Tarda menos porque esta guardada en cache
+
+- En la segunda consulta, se utilizaron resultados en caché, evitando la necesidad de consultas adicionales a servidores raíz y TLD, lo que aceleró el proceso.
+
+h2. Ejercicio 2
+
+h3. Dirección IP de una máquina o servicio de tu dominio:
+
+<pre>
+dig @172.22.200.76 asterix.aleeex.org 
+
+; <<>> DiG 9.18.28-1~deb12u2-Debian <<>> @172.22.200.76 asterix.aleeex.org
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 4769
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: f6c3bd9c76f4b4a801000000678e7e7f935a9ddf10d1145c (good)
+;; QUESTION SECTION:
+;asterix.aleeex.org.		IN	A
+
+;; ANSWER SECTION:
+asterix.aleeex.org.	86400	IN	A	172.22.200.102
+
+;; Query time: 0 msec
+;; SERVER: 172.22.200.76#53(172.22.200.76) (UDP)
+;; WHEN: Mon Jan 20 16:49:03 UTC 2025
+;; MSG SIZE  rcvd: 91
+
+</pre>
+
+h3. Servidor DNS con autoridad del dominio:
+
+<pre>
+dig @172.22.200.76 aleeex.org NS
+
+; <<>> DiG 9.18.28-1~deb12u2-Debian <<>> @172.22.200.76 aleeex.org NS
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 11447
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 2
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: bf27fc3d036994cd01000000678e7ea4047d2e6b4a07ea4d (good)
+;; QUESTION SECTION:
+;aleeex.org.			IN	NS
+
+;; ANSWER SECTION:
+aleeex.org.		86400	IN	NS	dns1.aleeex.org.
+
+;; ADDITIONAL SECTION:
+dns1.aleeex.org.	86400	IN	A	172.22.200.76
+
+;; Query time: 4 msec
+;; SERVER: 172.22.200.76#53(172.22.200.76) (UDP)
+;; WHEN: Mon Jan 20 16:49:40 UTC 2025
+;; MSG SIZE  rcvd: 102
+
+
+</pre>
+
+h3. Servidor de correo del dominio (MX):
+
+<pre>
+dig @172.22.200.76 aleeex.org MX
+
+; <<>> DiG 9.18.28-1~deb12u2-Debian <<>> @172.22.200.76 aleeex.org MX
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 37829
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 2
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: c584152128bc25bc01000000678e7ee160ba43f1afe7e4e4 (good)
+;; QUESTION SECTION:
+;aleeex.org.			IN	MX
+
+;; ANSWER SECTION:
+aleeex.org.		86400	IN	MX	10 correo.aleeex.org.
+
+;; ADDITIONAL SECTION:
+correo.aleeex.org.	86400	IN	A	172.22.200.101
+
+;; Query time: 4 msec
+;; SERVER: 172.22.200.76#53(172.22.200.76) (UDP)
+;; WHEN: Mon Jan 20 16:50:41 UTC 2025
+;; MSG SIZE  rcvd: 106
+
+</pre>
+
+h3. Resolución inversa (PTR) de una IP:
+
+<pre>
+dig @172.22.200.76 -x 172.22.200.103
+
+; <<>> DiG 9.18.28-1~deb12u2-Debian <<>> @172.22.200.76 -x 172.22.200.103
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 40241
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 2c720d73b13e777e01000000678e7e116b5ebbeed8f54a6b (good)
+;; QUESTION SECTION:
+;103.200.22.172.in-addr.arpa.	IN	PTR
+
+;; ANSWER SECTION:
+103.200.22.172.in-addr.arpa. 86400 IN	PTR	obelix.aleeex.org.
+
+;; Query time: 0 msec
+;; SERVER: 172.22.200.76#53(172.22.200.76) (UDP)
+;; WHEN: Mon Jan 20 16:47:13 UTC 2025
+;; MSG SIZE  rcvd: 115
+
+</pre>

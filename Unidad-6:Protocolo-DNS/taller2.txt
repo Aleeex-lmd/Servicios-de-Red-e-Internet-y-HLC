@@ -1,0 +1,152 @@
+h1. Taller 1
+
+h2. Ejercicio 1
+
+- Inicialmente sale esto cuando hacemos la consulta
+
+<pre>
+dig aleeex.org
+
+; <<>> DiG 9.18.28-1~deb12u2-Debian <<>> aleeex.org
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 2903
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 7bbe00f2de0ad5b601000000678e882578a2548a8267ea69 (good)
+;; QUESTION SECTION:
+;aleeex.org.			IN	A
+
+;; AUTHORITY SECTION:
+aleeex.org.		86400	IN	SOA	dns1.aleeex.org. root.aleeex.org. 1 604800 86400 2419200 86400
+
+;; Query time: 7 msec
+;; SERVER: 172.22.200.76#53(172.22.200.76) (UDP)
+;; WHEN: Mon Jan 20 17:30:13 UTC 2025
+;; MSG SIZE  rcvd: 113
+</pre>
+
+- Y al detener el maestro nos sale lo siguiente
+
+<pre>
+dig aleeex.org
+;; communications error to 172.22.200.76#53: connection refused
+;; communications error to 172.22.200.76#53: connection refused
+;; communications error to 172.22.200.76#53: connection refused
+
+; <<>> DiG 9.18.28-1~deb12u2-Debian <<>> aleeex.org
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 30593
+;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 1616c39ff28cd9ed01000000678e88bfd99aa6065c67daa8 (good)
+;; QUESTION SECTION:
+;aleeex.org.			IN	A
+
+;; AUTHORITY SECTION:
+aleeex.org.		86400	IN	SOA	dns1.aleeex.org. root.aleeex.org. 1 604800 86400 2419200 86400
+
+;; Query time: 0 msec
+;; SERVER: 172.22.201.189#53(172.22.201.189) (UDP)
+;; WHEN: Mon Jan 20 17:32:47 UTC 2025
+;; MSG SIZE  rcvd: 113
+</pre>
+
+- Al no funcionar el maestro lo pide al esclavo
+
+h2. Ejercicio 2
+
+h3. Número de serie:
+
+Es como un "número de versión" para la zona DNS. Cuando haces cambios en tu zona (por ejemplo, actualizas la dirección IP de un dominio), este número se aumenta. Los servidores secundarios (esclavos) comparan este número con el que tienen guardado. Si el número es más alto, significa que el maestro tiene una versión más reciente de la zona, por lo que el esclavo va a descargar la nueva información.
+
+h3. Los tiempos en el registro SOA:
+
+1. **Refresh (Tiempo de actualización)**: 
+   - Esto le dice al servidor esclavo cada cuánto tiempo debe revisar si el servidor maestro tiene alguna actualización de la zona.
+   - Si es 1 hora (3600 segundos), el servidor esclavo revisará al maestro cada hora.
+
+2. **Retry (Tiempo de reintento)**:
+   - Si el esclavo no puede contactar al maestro, le dice cuánto tiempo esperar antes de intentar nuevamente.
+   - Si se establece en 5 minutos (300 segundos), el esclavo intentará reconectarse después de 5 minutos.
+
+3. **Expire (Tiempo de expiración)**:
+   - Esto le dice al servidor esclavo cuánto tiempo puede usar la información de la zona si no puede contactar al maestro.
+   - Si pasa este tiempo, el esclavo dejará de usar esa información.
+   - Si es 1 semana (604800 segundos), significa que, después de 7 días sin poder contactar al maestro, el esclavo dejará de usar los datos.
+
+4. **Minimum TTL (Tiempo de vida mínimo)**:
+   - Es el tiempo durante el cual otros servidores pueden guardar la información sobre la zona en su memoria (cache) antes de pedirla nuevamente.
+   - Si está configurado a 24 horas (86400 segundos), otros servidores mantendrán esa información durante 24 horas antes de volver a pedirla.
+
+h2. Ejercicio 3
+
+- Realizamos la peticion
+
+<pre>
+dig prueba.aleeex.org
+
+; <<>> DiG 9.18.28-1~deb12u2-Debian <<>> prueba.aleeex.org
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 22889
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: ca32a98f70381d1c01000000678e8df2bb0eb88e88937c75 (good)
+;; QUESTION SECTION:
+;prueba.aleeex.org.		IN	A
+
+;; ANSWER SECTION:
+prueba.aleeex.org.	86400	IN	A	172.22.200.120
+
+;; Query time: 4 msec
+;; SERVER: 172.22.200.76#53(172.22.200.76) (UDP)
+;; WHEN: Mon Jan 20 17:54:58 UTC 2025
+;; MSG SIZE  rcvd: 90
+</pre>
+
+- A respondido el maestro, ahora apagamos y volvemos a probar
+
+<pre>
+dig prueba.aleeex.org
+;; communications error to 172.22.200.76#53: connection refused
+;; communications error to 172.22.200.76#53: connection refused
+;; communications error to 172.22.200.76#53: connection refused
+
+; <<>> DiG 9.18.28-1~deb12u2-Debian <<>> prueba.aleeex.org
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 65132
+;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 67b07f8e353b11cf01000000678e8e533d879d3376e9d514 (good)
+;; QUESTION SECTION:
+;prueba.aleeex.org.		IN	A
+
+;; ANSWER SECTION:
+prueba.aleeex.org.	86400	IN	A	172.22.200.120
+
+;; Query time: 4 msec
+;; SERVER: 172.22.201.189#53(172.22.201.189) (UDP)
+;; WHEN: Mon Jan 20 17:56:35 UTC 2025
+;; MSG SIZE  rcvd: 90
+</pre>
+
+- A respondido el esclavo
+
+
+h2. Ejercicio 4
+
+- Por hacer
+
