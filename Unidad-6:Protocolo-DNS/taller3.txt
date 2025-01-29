@@ -1,0 +1,88 @@
+h1. Taller 3
+
+h2. Ejercicio 1
+
+<pre>
+dig www.informatica.aleeex.org
+
+; <<>> DiG 9.18.28-1~deb12u2-Debian <<>> www.informatica.aleeex.org
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 39391
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: d0e3d07854a9d209010000006790a021eb378b4735902715 (good)
+;; QUESTION SECTION:
+;www.informatica.aleeex.org.	IN	A
+
+;; ANSWER SECTION:
+www.informatica.aleeex.org. 86066 IN	CNAME	web.informatica.aleeex.org.
+web.informatica.aleeex.org. 86066 IN	A	172.22.200.122
+
+;; Query time: 4 msec
+;; SERVER: 172.22.200.76#53(172.22.200.76) (UDP)
+;; WHEN: Wed Jan 22 07:37:05 UTC 2025
+;; MSG SIZE  rcvd: 117
+</pre>
+
+h2. Ejercicio 2
+
+<pre>dig informatica.aleeex.org
+
+; &lt;&lt;&gt;&gt; DiG 9.18.28-1~deb12u2-Debian &lt;&lt;&gt;&gt; informatica.aleeex.org
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 35831
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 5c9bfd721c350e42010000006790a05d7fe9f897bbc686bf (good)
+;; QUESTION SECTION:
+;informatica.aleeex.org.		IN	A
+
+;; AUTHORITY SECTION:
+informatica.aleeex.org.	10800	IN	SOA	dns.informatica.aleeex.org. root.informatica.aleeex.org. 4 604800 86400 2419200 86400
+
+;; Query time: 8 msec
+;; SERVER: 172.22.200.76#53(172.22.200.76) (UDP)
+;; WHEN: Wed Jan 22 07:38:05 UTC 2025
+;; MSG SIZE  rcvd: 124
+</pre>
+
+- Es distinto ya que se a delegado
+
+h2. Ejercicio 3
+
+<pre>
+dig informatica.aleeex.org MX
+
+; <<>> DiG 9.18.28-1~deb12u2-Debian <<>> informatica.aleeex.org MX
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 45222
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 2
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1232
+; COOKIE: 28c7ff5fc157d6a9010000006790a0c2a8cd8a220d73efde (good)
+;; QUESTION SECTION:
+;informatica.aleeex.org.		IN	MX
+
+;; ANSWER SECTION:
+informatica.aleeex.org.	86400	IN	MX	10 mail.informatica.aleeex.org.
+
+;; ADDITIONAL SECTION:
+mail.informatica.aleeex.org. 86400 IN	A	172.22.200.121
+
+;; Query time: 12 msec
+;; SERVER: 172.22.200.76#53(172.22.200.76) (UDP)
+;; WHEN: Wed Jan 22 07:39:46 UTC 2025
+;; MSG SIZE  rcvd: 116
+</pre>
+
+h2. Eercicio 4
+
+- Hecho

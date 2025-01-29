@@ -148,5 +148,4 @@ prueba.aleeex.org.	86400	IN	A	172.22.200.120
 
 h2. Ejercicio 4
 
-- Por hacer
-
+- Hecho
