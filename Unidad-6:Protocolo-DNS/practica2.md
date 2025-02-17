@@ -5,7 +5,7 @@
 ### 
 
 ```
-root@luffy:~# iptables -t nat -A PREROUTING -i ens3 -p udp --dport 53 -j DNAT --to 192.168.0.2
+iptables -t nat -A PREROUTING -i ens3 -p udp --dport 53 -j DNAT --to 192.168.0.2
 ```
 
 ### Vista externa
@@ -218,8 +218,6 @@ luffy.javi.gonzalonazareno.org.	86400 IN A	172.22.201.28
 ;; MSG SIZE  rcvd: 121
 ```
 
-### Servidor Web
-
 ### Servidor base de datos
 
 - Tambien instalaremos un sistema gestor de base de datos en sanji el cual sera `bd.aleeex.gonzalonazareno.org`el cual redirige a `sanji.aleeex.gonzalonazareno.org`
@@ -288,3 +286,88 @@ Query OK, 0 rows affected (0.003 sec)
 FLUSH PRIVILEGES;
 Query OK, 0 rows affected (0.001 sec)
 ```
+
+- Ahora permitimos el acceso desde todas las direcciones editando el fichero `/etc/mysql/mariadb.conf.d/50-server.cnf` y añadimos la siguiente linea si no esta
+
+```
+bind-address            = 0.0.0.0
+```
+
+- Para probar que funciona en nami instalaremos un cliente de mariadb
+
+```shell
+sudo apt install mariadb-client
+```
+
+- Nos conectamos de la siguente forma
+
+```shell
+alex@nami:~$ mysql -h sanji -u bd_user -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 42
+Server version: 10.6.18-MariaDB-0ubuntu0.22.04.1 Ubuntu 22.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> 
+```
+
+- Podemos probar que tambien accede a la base de datos
+
+```shell
+MariaDB [(none)]> USE bd;
+Database changed
+MariaDB [bd]> 
+```
+
+### Servidor Web
+
+- Vamos a instalar apache2 en Zoro, usara php y tendra instalado wordpress
+
+- Primero empezamos actualizando y instalando lo necesario, como es rocky sera algo distinto
+
+```shell
+sudo dnf update
+```
+
+- Instalamos los paquetes necesarios
+
+```shell
+dnf install -y httpd php php-mysqlnd
+systemctl enable --now httpd
+```
+
+- Y verificamos el estado con el siguente comando
+
+```shell
+systemctl status httpd
+```
+
+- A continuacion instalamos wordpress
+
+```shell
+dnf install -y wget unzip
+wget https://wordpress.org/latest.zip
+unzip latest.zip
+mv wordpress /var/www/html/
+chown -R apache:apache /var/www/html/wordpress
+chmod -R 755 /var/www/html/wordpress
+```
+
+- Configuramos el virtualhost en `/etc/httpd/conf.d/wordpress.conf`
+
+```shell
+<VirtualHost *:80>
+    ServerName www.aleeex.gonzalonazareno.org
+    DocumentRoot /var/www/html/wordpress
+    <Directory /var/www/html/wordpress>
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+```
+
+- Al acceder del navegador añadimos los datos que nos pide y dejamos que se instale
