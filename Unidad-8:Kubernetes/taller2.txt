@@ -1,0 +1,106 @@
+h1. Taller 2: Trabajando con ReplicaSet
+
+h2. ReplicaSet.yml
+
+<pre><code=yml>
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: test-web-rs
+  labels:
+    app: test-web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: test-web
+  template:
+    metadata:
+      labels:
+        app: test-web
+    spec:
+      containers:
+        - name: test-web-container
+          image: iesgn/test_web:latest
+          ports:
+            - containerPort: 80
+</code></pre>
+
+h2. Comprobacion de que se a creado
+
+<pre><code=bash>
+> kubectl get rs
+
+NAME          DESIRED   CURRENT   READY   AGE
+test-web-rs   3         3         3       36s
+
+> kubectl get pods
+NAME                READY   STATUS    RESTARTS   AGE
+test-web-rs-4zdt4   1/1     Running   0          39s
+test-web-rs-7kplr   1/1     Running   0          39s
+test-web-rs-j8jp9   1/1     Running   0          39s
+</code></pre>
+
+h2. Información detallada del ReplicaSet
+
+<pre><code=bash>
+> kubectl describe rs test-web-rs
+
+Name:         test-web-rs
+Namespace:    default
+Selector:     app=test-web
+Labels:       app=test-web
+Annotations:  <none>
+Replicas:     3 current / 3 desired
+Pods Status:  3 Running / 0 Waiting / 0 Succeeded / 0 Failed
+Pod Template:
+  Labels:  app=test-web
+  Containers:
+   test-web-container:
+    Image:         iesgn/test_web:latest
+    Port:          80/TCP
+    Host Port:     0/TCP
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Events:
+  Type    Reason            Age   From                   Message
+  ----    ------            ----  ----                   -------
+  Normal  SuccessfulCreate  98s   replicaset-controller  Created pod: test-web-rs-7kplr
+  Normal  SuccessfulCreate  98s   replicaset-controller  Created pod: test-web-rs-j8jp9
+  Normal  SuccessfulCreate  98s   replicaset-controller  Created pod: test-web-rs-4zdt4
+</code></pre>
+
+h2. Tolerancia a fallos
+
+<pre><code=bash>
+> kubectl delete pod test-web-rs-7kplr
+
+pod "test-web-rs-7kplr" deleted
+
+> kubectl get pods                    
+
+NAME                READY   STATUS    RESTARTS   AGE
+test-web-rs-4zdt4   1/1     Running   0          3m27s
+test-web-rs-j8jp9   1/1     Running   0          3m27s
+test-web-rs-vd2qv   1/1     Running   0          4s
+</code></pre>
+
+h2. Escalado de ReplicaSet
+
+<pre><code=bash>
+> kubectl scale rs test-web-rs --replicas=5
+
+replicaset.apps/test-web-rs scaled
+
+> kubectl get pods                         
+
+NAME                READY   STATUS    RESTARTS   AGE
+test-web-rs-4zdt4   1/1     Running   0          4m40s
+test-web-rs-j8jp9   1/1     Running   0          4m40s
+test-web-rs-nlfb8   1/1     Running   0          3s
+test-web-rs-nw66d   1/1     Running   0          3s
+test-web-rs-vd2qv   1/1     Running   0          77s
+</code></pre>

@@ -1,0 +1,27 @@
+h1. Taller 3: Trabajando con Deployments
+
+h2. Ejercicio 1: Trabajando con Deployments
+
+h3. Deployment.yml
+
+<pre><code=yml>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: test-web
+  template:
+    metadata:
+      labels:
+        app: test-web
+    spec:
+      containers:
+        - name: test-web-container
+          image: iesgn/test_web:latest
+          ports:
+            - containerPort: 80
+</code></pre>

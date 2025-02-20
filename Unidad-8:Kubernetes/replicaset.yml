@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: test-web-rs
+  labels:
+    app: test-web
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: test-web
+  template:
+    metadata:
+      labels:
+        app: test-web
+    spec:
+      containers:
+        - name: test-web-container
+          image: iesgn/test_web:latest
+          ports:
+            - containerPort: 80
