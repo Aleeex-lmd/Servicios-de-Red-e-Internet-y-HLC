@@ -25,3 +25,130 @@ spec:
           ports:
             - containerPort: 80
 </code></pre>
+
+h3. Comprobacion de que se han creado
+
+<pre><code=bash>
+> kubectl apply -f deployment.yml
+
+deployment.apps/web-deployment created
+
+> kubectl get deploy,rs,pod
+
+NAME                             READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/web-deployment   2/2     2            2           5m26s
+
+NAME                                        DESIRED   CURRENT   READY   AGE
+replicaset.apps/web-deployment-56788765f9   2         2         2       5m26s
+
+NAME                                  READY   STATUS    RESTARTS   AGE
+pod/web-deployment-56788765f9-5smrk   1/1     Running   0          5m26s
+pod/web-deployment-56788765f9-lfb5c   1/1     Running   0          5m26s
+</code></pre>
+
+h3. Información detallada del deployment
+
+<pre><code=bash>
+> kubectl describe deployment web-deployment    
+
+Name:                   web-deployment
+Namespace:              default
+CreationTimestamp:      Thu, 20 Feb 2025 10:05:58 +0100
+Labels:                 <none>
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=test-web
+Replicas:               2 desired | 2 updated | 2 total | 2 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=test-web
+  Containers:
+   test-web-container:
+    Image:         iesgn/test_web:latest
+    Port:          80/TCP
+    Host Port:     0/TCP
+    Environment:   <none>
+    Mounts:        <none>
+  Volumes:         <none>
+  Node-Selectors:  <none>
+  Tolerations:     <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   web-deployment-56788765f9 (2/2 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  4m5s  deployment-controller  Scaled up replica set web-deployment-56788765f9 from 0 to 2
+</code></pre>
+
+h3. Comprobación port forward
+
+<pre><code=bash>
+> kubectl port-forward deployment/web-deployment 8888:80  
+
+Forwarding from 127.0.0.1:8888 -> 80
+Forwarding from [::1]:8888 -> 80
+</code><pre>
+
+!images/sri_u8_t3_i1.png!
+
+h3. Logs del deployment
+
+<pre><code=bash>
+kubectl logs deploy/web-deployment       
+Found 2 pods, using pod/web-deployment-56788765f9-5smrk
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 10.244.0.13. Set the 'ServerName' directive globally to suppress this message
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 10.244.0.13. Set the 'ServerName' directive globally to suppress this message
+[Thu Feb 20 09:06:00.788072 2025] [mpm_event:notice] [pid 1:tid 139998458496128] AH00489: Apache/2.4.46 (Unix) configured -- resuming normal operations
+[Thu Feb 20 09:06:00.788141 2025] [core:notice] [pid 1:tid 139998458496128] AH00094: Command line: 'httpd -D FOREGROUND'
+</code></pre>
+
+h2. Ejercicio 2: Actualización y desactualización de nuestra aplicación.
+
+h3. Version 1
+
+!images/sri_u8_t3_i2.png!
+
+h3. Version 2
+
+!images/sri_u8_t3_i3.png!
+
+h3. Historial cambios
+
+<pre><code=bash>
+>  kubectl rollout history deployment/web-deployment-v1
+
+deployment.apps/web-deployment-v1 
+REVISION  CHANGE-CAUSE
+1         <none>
+2         kubectl set image deployment/web-deployment-v1 web-container=iesgn/test_web:version2 --record=true
+</code></pre>
+
+h3. Version 3
+
+!images/sri_u8_t3_i4.png!
+
+h3. Rollback
+
+<pre><code=bash>
+> kubectl rollout undo deploy/web-deployment-v1
+
+deployment.apps/web-deployment-v1 rolled back
+
+> kubectl rollout history deployment/web-deployment-v1                                         
+
+deployment.apps/web-deployment-v1 
+REVISION  CHANGE-CAUSE
+1         <none>
+3         kubectl set image deployment/web-deployment-v1 web-container=iesgn/test_web:version3 --record=true
+4         kubectl set image deployment/web-deployment-v1 web-container=iesgn/test_web:version2 --record=true
+</code></pre>
+
+h3. Version 2 (de nuevo)
+
+!images/sri_u8_t3_i5.png!

@@ -236,7 +236,7 @@ Forwarding from 127.0.0.1:8888 -> 80
 Forwarding from [::1]:8888 -> 80
 </code></pre>
 
-!!images/sri_u8_t1_01.png!!
+!images/sri_u8_t1_i1.png!
 
 h2. Logs de acceso
 
