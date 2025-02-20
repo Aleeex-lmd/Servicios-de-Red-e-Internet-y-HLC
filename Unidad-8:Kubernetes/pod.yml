@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: mi-primer-pod
+  name: mi-pod
   labels:
     app: servidor-web
 spec:
