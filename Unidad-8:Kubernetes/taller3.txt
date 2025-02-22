@@ -152,3 +152,6 @@ REVISION  CHANGE-CAUSE
 h3. Version 2 (de nuevo)
 
 !images/sri_u8_t3_i5.png!
+
+h2. Ejercicio 3: Despliegue de la aplicación GuestBook
+
