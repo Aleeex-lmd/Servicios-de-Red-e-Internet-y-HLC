@@ -93,7 +93,7 @@ h3. Comprobación port forward
 
 Forwarding from 127.0.0.1:8888 -> 80
 Forwarding from [::1]:8888 -> 80
-</code><pre>
+</code></pre>
 
 !images/sri_u8_t3_i1.png!
 
@@ -155,3 +155,25 @@ h3. Version 2 (de nuevo)
 
 h2. Ejercicio 3: Despliegue de la aplicación GuestBook
 
+h3. Recursos creados
+
+<pre><code=bash>
+< kubectl get deploy,rs,pod                       
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/guestbook   0/3     3            0           109s
+deployment.apps/redis       1/1     1            1           109s
+
+NAME                                   DESIRED   CURRENT   READY   AGE
+replicaset.apps/guestbook-7ffbb44595   3         3         0       109s
+replicaset.apps/redis-54d468c877       1         1         1       109s
+
+NAME                             READY   STATUS              RESTARTS   AGE
+pod/guestbook-7ffbb44595-fm2fh   0/1     ContainerCreating   0          109s
+pod/guestbook-7ffbb44595-k8m6q   0/1     ContainerCreating   0          109s
+pod/guestbook-7ffbb44595-l2767   0/1     ContainerCreating   0          109s
+pod/redis-54d468c877-p8mdw       1/1     Running             0          109s
+</code></pre>
+
+h3. Error
+
+!images/sri_u8_t3_i6.png!

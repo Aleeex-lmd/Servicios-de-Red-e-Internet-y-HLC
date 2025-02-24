@@ -2,7 +2,7 @@
 
 ## Servidor DNS
 
-### 
+### Regla iptables
 
 ```
 iptables -t nat -A PREROUTING -i ens3 -p udp --dport 53 -j DNAT --to 192.168.0.2
