@@ -3,11 +3,7 @@
 ## **Unidad 6: Protocolo DNS**
 
 ### **Teoría**
-- **Resolución de nombres de dominios en sistemas Linux**  
-  Estudio de cómo Linux resuelve los nombres de dominio y el papel del archivo `/etc/hosts` en el proceso.
-  
-- **Protocolo DNS**  
-  Explicación detallada del protocolo DNS, su arquitectura y funcionamiento dentro de la infraestructura de Internet.
+- [**Teoria Josedomingo**](https://github.com/Aleeex-lmd/curso_kubernetes_ies.git)
 
 ### **Ejercicios**
 - **Ejercicio 1**: Resolución de nombres de dominios en sistemas Linux  
