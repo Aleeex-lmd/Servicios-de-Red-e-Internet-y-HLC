@@ -78,8 +78,7 @@
 ## **Unidad 8: Kubernetes**
 
 ### **Teoría**
-- **Curso Kubernetes**  
-  Introducción al uso de Kubernetes para la gestión de contenedores y despliegue de aplicaciones en un entorno de producción.
+- [**Teoria Josedomingo**](https://github.com/Aleeex-lmd/curso_kubernetes_ies.git)
 
 ### **Ejercicios**
 - **Ejercicio 1**: Instalación y configuración de minikube y kubectl  
