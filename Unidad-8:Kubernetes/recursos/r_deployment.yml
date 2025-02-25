@@ -15,6 +15,10 @@ spec:
       containers:
         - name: test-web-container
           image: iesgn/test_web:latest
+          resources:
+            limits:
+              memory: "128Mi" 
+              cpu: "500m" 
           ports:
             - containerPort: 80
 
