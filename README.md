@@ -5,4 +5,4 @@
 - t => teoría
 - e => enunciado
 - r => recurso
-- x => ejercicio resuelto
+- s => ejercicio resuelto
