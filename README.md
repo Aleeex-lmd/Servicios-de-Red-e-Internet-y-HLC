@@ -13,30 +13,44 @@
 - **Ejercicio 1**: Resolución de nombres de dominios en sistemas Linux  
   Practicar la resolución de nombres utilizando herramientas nativas de Linux.  
   - [Ver ejercicio 1](./Unidad-6:Protocolo-DNS/enunciados/e_ejercicio1.md)  
-  - [Ver ejercicio 1 resuelto](./Unidad-6:Protocolo-DNS/enunciados_resueltos/s_taller1.txt)
 
 - **Ejercicio 2**: Consultas DNS con `dig`  
   Uso de la herramienta `dig` para realizar consultas DNS detalladas.
+  - [Ver ejercicio 1](./Unidad-6:Protocolo-DNS/enunciados/e_ejercicio2.md)  
 
 ### **Servidor DNS bind9**
 - **Taller 1**: Instalación y configuración del servidor bind9 en nuestra red local  
   Instrucciones paso a paso para configurar un servidor DNS usando `bind9`.
+  - [Ver taller 1](./Unidad-6:Protocolo-DNS/enunciados/e_taller1.md)
+  - [Ver taller 1 resuelto](./Unidad-6:Protocolo-DNS/enunciados_resueltos/s_taller1.txt)
   
 - **Taller 2**: Instalación y configuración de un servidor DNS esclavo  
   Explicación de la configuración de un servidor DNS esclavo para replicar la información del servidor primario.
+  - [Ver taller 2](./Unidad-6:Protocolo-DNS/enunciados/e_taller2.md)
+  - [Ver taller 2 resuelto](./Unidad-6:Protocolo-DNS/enunciados_resueltos/s_taller2.txt)
 
 - **Taller 3**: Delegación de subdominios con bind9  
   Establecer subdominios y delegar su gestión a servidores distintos.
+  - [Ver taller 3](./Unidad-6:Protocolo-DNS/enunciados/e_taller3.md)
+  - [Ver taller 3 resuelto](./Unidad-6:Protocolo-DNS/enunciados_resueltos/s_taller3.txt)
 
 - **Taller 4**: Implementación de un DNS dinámico  
   Configuración de DNS dinámico para cambiar automáticamente las direcciones IP asociadas a un nombre de dominio.
+  - [Ver taller 4](./Unidad-6:Protocolo-DNS/enunciados/e_taller4.md)
+  - [Ver taller 4 resuelto](./Unidad-6:Protocolo-DNS/enunciados_resueltos/s_taller4.txt)
 
 ### **Prácticas**
 - **Práctica (1 / 2)**: Servidores Web, Base de Datos y DNS en nuestro escenario de OpenStack  
   Desplegar servidores de DNS junto con servidores web y bases de datos en un entorno de OpenStack.
+  - [Ver practica 1](./Unidad-6:Protocolo-DNS/enunciados/e_practica1.md)
+  - [Ver resolución practica](./Unidad-6:Protocolo-DNS/enunciados_resueltos/s_practica1.md)
+  - [Ver practica resualta](./Unidad-6:Protocolo-DNS/enunciados_resueltos/s_practica1.txt)
 
 - **Práctica (2 / 2)**: Servidores Web, Base de Datos y DNS en nuestro escenario de OpenStack  
   Continuación de la práctica anterior con ajustes y configuraciones avanzadas.
+  - [Ver practica 2](./Unidad-6:Protocolo-DNS/enunciados/e_practica3.md)
+  - [Ver resolución practica](./Unidad-6:Protocolo-DNS/enunciados_resueltos/s_practica2.md)
+  - [Ver practica resualta](./Unidad-6:Protocolo-DNS/enunciados_resueltos/s_practica2.txt)
 
 ---
 
