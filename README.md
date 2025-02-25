@@ -12,7 +12,7 @@
 ### **Ejercicios**
 - **Ejercicio 1**: Resolución de nombres de dominios en sistemas Linux  
   Practicar la resolución de nombres utilizando herramientas nativas de Linux.
-  [aa](enunciados/e_ejercicio1.md)
+  [aa](Unidad-6:Protocolo-DNS/enunciados/e_ejercicio1.md)
   
 - **Ejercicio 2**: Consultas DNS con `dig`  
   Uso de la herramienta `dig` para realizar consultas DNS detalladas.
