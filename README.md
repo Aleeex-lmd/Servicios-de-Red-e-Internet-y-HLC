@@ -104,7 +104,7 @@
 
 - **Taller 4**: Trabajando con Services  
   Exposición de aplicaciones y servicios a través de Kubernetes Services para facilitar la comunicación.
-  -[Ver enunciado taller 4](./Unidad-8:Kubernetes/enunciados/e_taller4.md)
+  - [Ver enunciado taller 4](./Unidad-8:Kubernetes/enunciados/e_taller4.md)
 
 - **Taller 5**: Despliegues parametrizados  
   Implementación de despliegues parametrizados para mayor flexibilidad en la configuración de aplicaciones.
