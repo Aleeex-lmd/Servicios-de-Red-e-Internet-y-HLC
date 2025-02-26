@@ -4,7 +4,7 @@
 
 Lo que haremos será crear un service el cual correspondera al `GuestBook` que hicimos en el taller anterior para poder acceder a este
 
-### Service
+### Service Guestbook
 
 El service estará estructurado de la siguiente forma
 
@@ -52,6 +52,32 @@ minikube ip
 
 Como podemos ver esta en el puero 80
 Ahora accederemos a la ip del nodo master y el puerto asignado desde el navegador, podremos ver lo siguiente
+
+![GuestBook waiting for a database](../images/sri_u8_t4_i1.png)
+
+`Waiting for database connection...` &rarr; Esto lo que nos dice es que esta esperando a conectarse a una base de datos, pero como aun no esta configurada se quedara asi
+
+### Service database
+
+A continuacion creareos el servicio para la base de datos
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  labels:
+    app: redis
+    tier: backend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 6379
+    targetPort: redis-server
+  selector:
+    app: redis
+    tier: backend
+```
 
 
 
