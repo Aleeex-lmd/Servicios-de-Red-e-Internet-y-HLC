@@ -53,11 +53,7 @@
 ## **Unidad 7: Servidor de Correo Electrónico**
 
 ### **Teoría**
-- **Curso Correo Electrónico**  
-  Estudio del funcionamiento y la arquitectura de los servidores de correo electrónico, los protocolos SMTP, IMAP y POP3.
-
-- **Resumen: Servidor de correos**  
-  Revisión de la teoría sobre la implementación y administración de servidores de correo electrónico.
+- [**Teoria Josedomingo**](https://github.com/Aleeex-lmd/curso_correo_electronico_ies.git)
 
 ### **Talleres**
 - **Taller 1**: Servidor de correo en los servidores de clase  
