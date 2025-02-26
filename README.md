@@ -93,14 +93,17 @@
 - **Taller 1**: Trabajando con Pods  
   Creación y gestión de Pods en Kubernetes para el despliegue de aplicaciones.
   - [Ver enunciado taller 1](./Unidad-8:Kubernetes/enunciados/e_taller1.md)
+  - [Ver taller 1 resuelto](./Unidad-8:Kubernetes/enunciados_resueltos/s_taller1.txt)
 
 - **Taller 2**: Trabajando con ReplicaSet  
   Gestión de ReplicaSets para asegurar la disponibilidad y escalabilidad de las aplicaciones.
   - [Ver eunciado taller 2](./Unidad-8:Kubernetes/enunciados/e_taller2.md)
+  - [Ver taller 2 resuelto](./Unidad-8:Kubernetes/enunciados_resueltos/s_taller2.txt)
 
 - **Taller 3**: Trabajando con Deployments  
   Despliegue y gestión de aplicaciones con Kubernetes utilizando Deployments.
   - [Ver enunciado taller 3](./Unidad-8:Kubernetes/enunciados/e_taller3.md)
+  - [Ver taller 3 resuelto](./Unidad-8:Kubernetes/enunciados_resueltos/s_taller3.txt)
 
 - **Taller 4**: Trabajando con Services  
   Exposición de aplicaciones y servicios a través de Kubernetes Services para facilitar la comunicación.
