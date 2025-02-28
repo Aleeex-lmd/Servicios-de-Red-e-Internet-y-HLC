@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lets-chat
+  labels:
+    app: lets-chat
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: lets-chat
+  template:
+    metadata:
+      labels:
+        app: lets-chat
+    spec:
+      containers:
+      - name: lets-chat
+        image: sdelements/lets-chat
+        securityContext:
+          runAsUser: 0
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 8080
+        env:
+        - name: LCB_DATABASE_URI
+          value: "mongodb://admin:password@mongo:27017/letschat?authSource=admin"

@@ -79,6 +79,167 @@ spec:
     tier: backend
 ```
 
+Ahora lo subimos junto con el deploy de redis y la web se debería ver ahora de la siguiente forma
 
+![Guestbook funcionando correctamente](../images/sri_u8_t4_i2.png)
 
+Podemos ver que se conecta correctamente a la base de datos debido a que ya no nos aparece el texto anterior
 
+### Acceso a la aplicación usando Ingress
+
+Primero crearemos el fichero yml
+
+```yml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: guestbook
+spec:
+  rules:
+  - host: www.aleeex.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: guestbook
+            port:
+              number: 80
+```
+
+Lo iniciamos
+
+```bash
+kubectl apply -f r_ingress-guestbook.yml                    
+ingress.networking.k8s.io/guestbook created
+```
+
+Activamos el addon ingress con el siguiente comando
+
+```bash
+minikube addons enable ingress
+```
+
+Y en /etc/hosts añadimos la ip y el dominio y ahora probamos a conectarnos
+
+![Guestbook por dominio](../images/sri_u8_t4_i3.png)
+
+## Ejercicio 2: Despliegue y acceso de la Aplicación Lets-Chat
+
+Primero haremos el deployment de mongo
+
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+  labels:
+    app: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo
+        image: mongo:4
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: "admin"
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: "password"
+
+```
+
+Y el service
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo
+  labels:
+    app: mongo
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  selector:
+    app: mongo
+```
+
+Ahora haremos sera crear el deployment de lets-chat
+
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lets-chat
+  labels:
+    app: lets-chat
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: lets-chat
+  template:
+    metadata:
+      labels:
+        app: lets-chat
+    spec:
+      containers:
+      - name: lets-chat
+        image: sdelements/lets-chat
+        ports:
+        - containerPort: 8080
+        env:
+        - name: LCB_DATABASE_URI
+          value: "mongodb://mongo:27017/letschat"
+```
+
+Y el service
+
+```yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: lets-chat
+  labels:
+    app: lets-chat
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: lets-chat
+```
+
+Por ultimo el ingress
+
+```yml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lets-chat
+spec:
+  rules:
+  - host: www.chat-aleeex.org
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: lets-chat
+            port:
+              number: 8080
+```
