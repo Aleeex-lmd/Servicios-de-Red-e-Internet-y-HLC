@@ -1,0 +1,52 @@
+#cloud-config
+package_update: true
+
+# Configuración de dominio y hostname
+hostname: master1
+
+# Creación de usuarios
+users:
+  # Usuario administrador
+  - name: admin
+    gecos: "Usuario Administrador"
+    primary_group: admin
+    groups:
+      - sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    lock_passwd: false
+    passwd: $6$gxB69Eo6slEhM49k$55vXMTmw81VzVIMU.wXdwjS174Ku7sYSmjq1FrYI080Ov2jN/3C.wE25R0xLtsGej/XBa6C.ojeycelvx9qLM.
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCfqTox9jGgrUSaq0ra/oATsNLVzSh2ntOaK2khww5gKhLzCSwxFDtQgerew29i5CFZzmvZ27qz0ONI8Dzix45/c7IafIM+j+/AzPu824RpQO1iPaPFoJPEHFTxg+KnlrMBkpyCq8nS32JGjnxZjLSBan0hBy5v6WYkFBm/4uB5b6jxkFwm9ZipqhO0RTfxKJKgL7bxV15Und+CQFFXbrGKq3H+840tRsaTK1/pjEus8/HzrKm+kFmu5zfZxw7sTScnLDcro7ThArw3ZoHqGxuS+EjJy7c1gDHvBMGHp9DwlIxEL2JA0QPwAJ/MYtEshlT6Ng/LYCIokqYeWZJP+Lu4zpQe01ZtQdB+fU5bNJaICiM3PM7vJoz+HP164M544L9jQz4FMgHHWZaImdX31CgrW22meiyiRDt3TQewldNuA9GVNtCfbMZj7jLW9lF4RO00obML0wPF9THrbefG1ZmYdf3I0+JLvopA4jtrTbmGulUE7hLM1lTsrqYoKFS7edM= alex@Riolu
+
+  # Usuario sin privilegios
+  - name: alex
+    gecos: "Usuario Estándar"
+    primary_group: alex
+    groups:
+      - users
+    shell: /bin/bash
+    lock_passwd: false
+    passwd: $6$eykFxx0uxfIB9JwC$jtMTUivM6Xf5sIZDvrFuXPwfcxmY56NirkCXwvIDehYXKTkIU3jLvPGb2oPHd2pZRe0GCRoVAhBhJ8xq8JF/o/
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCfqTox9jGgrUSaq0ra/oATsNLVzSh2ntOaK2khww5gKhLzCSwxFDtQgerew29i5CFZzmvZ27qz0ONI8Dzix45/c7IafIM+j+/AzPu824RpQO1iPaPFoJPEHFTxg+KnlrMBkpyCq8nS32JGjnxZjLSBan0hBy5v6WYkFBm/4uB5b6jxkFwm9ZipqhO0RTfxKJKgL7bxV15Und+CQFFXbrGKq3H+840tRsaTK1/pjEus8/HzrKm+kFmu5zfZxw7sTScnLDcro7ThArw3ZoHqGxuS+EjJy7c1gDHvBMGHp9DwlIxEL2JA0QPwAJ/MYtEshlT6Ng/LYCIokqYeWZJP+Lu4zpQe01ZtQdB+fU5bNJaICiM3PM7vJoz+HP164M544L9jQz4FMgHHWZaImdX31CgrW22meiyiRDt3TQewldNuA9GVNtCfbMZj7jLW9lF4RO00obML0wPF9THrbefG1ZmYdf3I0+JLvopA4jtrTbmGulUE7hLM1lTsrqYoKFS7edM= alex@Riolu
+
+  # Usuario profesor
+  - name: profesor
+    gecos: "Usuario Profesor"
+    primary_group: profesor
+    groups:
+      - sudo
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    lock_passwd: false
+    passwd: $6$03/N0AJ/Q27csLhQ$znYF59oDrj47vSn1xEAR9vODFmL58JRMqWp/cNB8Bu9Rf27hy6amM4qKBIb35m1hAlx/tet7Cp9xzG2byRQHc0
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDf9lnBH2nCT2ezpDZnqSBeDuSsVGGFD1Kzqa4KyIVkzkrD7pNHHkkpSuO4isKcCsUcopYOcA38QtG7wB0v/qn8Jsq731N8bjaKOdQN25vqLjwVj8DpYtvGc+ZA0uaChe7TS+QBzlMC9ypwj4wf15Q/z3v/ip4FF2cORT0cQC04cNRQDgUg4p1rlOs8+ma7OPh3P3UvzlPfLhi2H1yl+/mo4XLOcAMNr/jiZCwYxom6OEOYVBNk8MZX/Zn+qRi71D0RPiKg27AcXSD/FPWdQW9hBH1Zq5xGicUFS4C9yXvHKru7cMmmxV2G80p/ArRscKWq92UT5jIJQpccmHxsxdIi6o25LhcxH1dOnZy6kHcJ2yP24CnBHK5Y3SsovCD0Th6MN1VlTySbl8Ar0ypmY+GYO+oVd4bM3ioHzL0AMqYnS29m0UtEDvFEUUoSkOoLK4uSlcvej+OIVp7X5G7oZ56nZZf+qHEgodv++a6vPmhH2ZSgoOj1sE39DK7InuKSqCE= rafa@eco
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmjoVIoZCx4QFXvljqozXGqxxlSvO7V2aizqyPgMfGqnyl0J9YXo6zrcWYwyWMnMdRdwYZgHqfiiFCUn2QDm6ZuzC4Lcx0K3ZwO2lgL4XaATykVLneHR1ib6RNroFcClN69cxWsdwQW6dpjpiBDXf8m6/qxVP3EHwUTsP8XaOV7WkcCAqfYAMvpWLISqYme6e+6ZGJUIPkDTxavu5JTagDLwY+py1WB53eoDWsG99gmvyit2O1Eo+jRWN+mgRHIxJTrFtLS6o4iWeshPZ6LvCZ/Pum12Oj4B4bjGSHzrKjHZgTwhVJ/LDq3v71/PP4zaI3gVB9ZalemSxqomgbTlnT jose@debian
+
+# Cambio de contraseña del usuario root
+chpasswd:
+  list: |
+    root:root
+  expire: false

@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: biblioteca-db-secret
+type: Opaque
+data:
+  DB_HOST: bXlzcWw=
+  DB_NAME: YmlibGlvdGVjYQ==
+  DB_USER: YmlibGlvdGVjdXN1YXJpbw==
+  DB_PASS: YmlibGlvdGVjYXBhc3M=
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: biblioteca
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: biblioteca
+  template:
+    metadata:
+      labels:
+        app: biblioteca
+    spec:
+      containers:
+        - name: biblioteca
+          image: aleeexlmd/biblioteca:v2
+          env:
+            - name: BASE_URL
+              value: "http://biblioteca.local/"
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: biblioteca-db-secret
+                  key: DB_HOST
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: biblioteca-db-secret
+                  key: DB_NAME
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: biblioteca-db-secret
+                  key: DB_USER
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: biblioteca-db-secret
+                  key: DB_PASS
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "500m"
+            limits:
+              memory: "1Gi"
+              cpu: "1"
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: biblioteca-service
+spec:
+  selector:
+    app: biblioteca
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30080  # Se asigna un puerto en el nodo
+  type: NodePort

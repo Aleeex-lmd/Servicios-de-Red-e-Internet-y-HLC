@@ -149,6 +149,10 @@ spec:
       containers:
       - name: mongo
         image: mongo:4
+        resources:
+          limits:
+            memory: "128Mi" 
+            cpu: "500m" 
         ports:
         - containerPort: 27017
         env:
@@ -156,7 +160,6 @@ spec:
           value: "admin"
         - name: MONGO_INITDB_ROOT_PASSWORD
           value: "password"
-
 ```
 
 Y el service
@@ -198,11 +201,20 @@ spec:
       containers:
       - name: lets-chat
         image: sdelements/lets-chat
+        securityContext:
+          runAsUser: 0
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "500m"
+          limits:
+            memory: "512Mi"
+            cpu: "1000m"
         ports:
         - containerPort: 8080
         env:
         - name: LCB_DATABASE_URI
-          value: "mongodb://mongo:27017/letschat"
+          value: "mongodb://admin:password@mongo:27017/letschat?authSource=admin"
 ```
 
 Y el service
@@ -221,6 +233,12 @@ spec:
     targetPort: 8080
   selector:
     app: lets-chat
+```
+
+Los ejecutamos
+
+```bash
+kubectl get svc lets-chat
 ```
 
 Por ultimo el ingress

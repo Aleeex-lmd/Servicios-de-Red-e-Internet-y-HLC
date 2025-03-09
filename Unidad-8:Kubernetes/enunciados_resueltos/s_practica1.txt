@@ -1,0 +1,98 @@
+h1. Práctica: Kubernetes
+
+h2. Ejercicio 1: Construcción de una imagen docker
+
+h3. 1
+
+<pre>
+> kubectl get pods,deployments,svc,ingress,secrets,pvc
+
+NAME                             READY   STATUS    RESTARTS   AGE
+pod/biblioteca-8ccbb4fd4-88bnk   1/1     Running   0          4h19m
+pod/biblioteca-8ccbb4fd4-jhzbd   0/1     Pending   0          4h19m
+pod/mysql-77d7fc5c7f-nczzs       1/1     Running   0          4h19m
+
+NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/biblioteca   1/2     2            1           4h19m
+deployment.apps/mysql        1/1     1            1           4h19m
+
+NAME                         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+service/biblioteca-service   NodePort    10.102.48.242    <none>        80:30080/TCP   4h19m
+service/kubernetes           ClusterIP   10.96.0.1        <none>        443/TCP        5h26m
+service/mysql                ClusterIP   10.105.204.252   <none>        3306/TCP       4h19m
+
+NAME                                           CLASS    HOSTS              ADDRESS         PORTS   AGE
+ingress.networking.k8s.io/biblioteca-ingress   <none>   biblioteca.local   192.168.39.24   80      5h13m
+
+NAME                          TYPE     DATA   AGE
+secret/biblioteca-db-secret   Opaque   4      4h27m
+secret/mysql-secret           Opaque   4      4h47m
+
+NAME                              STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/mysql-pvc   Bound    pvc-1ced5de1-9817-4d02-8dd7-93fccd85e814   1Gi        RWO            standard       <unset>                 5h14m
+</pre>
+
+h3. 2
+
+!images/sri_u8_p1_i1.png!
+
+h3. 3
+
+!images/sri_u8_p1_i2.png!
+
+h3. 4
+
+<pre>
+> kubectl delete deployment mysql
+
+deployment.apps "mysql" deleted
+
+> kubectl get pvc
+
+NAME        STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+mysql-pvc   Bound    pvc-1ced5de1-9817-4d02-8dd7-93fccd85e814   1Gi        RWO            standard       <unset>                 5h26m
+</pre>
+
+h3. 5
+
+<pre>
+> kubectl scale deployment biblioteca --replicas=3
+
+deployment.apps/biblioteca scaled
+
+> kubectl get pods
+
+NAME                         READY   STATUS    RESTARTS       AGE
+biblioteca-8ccbb4fd4-88bnk   1/1     Running   1 (2m1s ago)   4h38m
+biblioteca-8ccbb4fd4-jhzbd   1/1     Running   2 (53s ago)    4h38m
+biblioteca-8ccbb4fd4-qt86f   1/1     Running   0              5s
+mysql-77d7fc5c7f-fr4mq       1/1     Running   0              6m10s
+</pre>
+
+h3. 6
+
+<pre>
+kubectl get all
+NAME                              READY   STATUS    RESTARTS   AGE
+pod/biblioteca-7696dc6765-hhn2t   1/1     Running   0          40s
+pod/biblioteca-7696dc6765-mv9rq   1/1     Running   0          43s
+pod/mysql-77d7fc5c7f-fr4mq        1/1     Running   0          23m
+
+NAME                         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+service/biblioteca-service   NodePort    10.102.48.242    <none>        80:30080/TCP   4h55m
+service/kubernetes           ClusterIP   10.96.0.1        <none>        443/TCP        6h2m
+service/mysql                ClusterIP   10.105.204.252   <none>        3306/TCP       4h55m
+
+NAME                         READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/biblioteca   2/2     2            2           4h55m
+deployment.apps/mysql        1/1     1            1           23m
+
+NAME                                    DESIRED   CURRENT   READY   AGE
+replicaset.apps/biblioteca-7696dc6765   2         2         2       43s
+replicaset.apps/biblioteca-8ccbb4fd4    0         0         0       4h55m
+replicaset.apps/mysql-77d7fc5c7f        1         1         1       23m
+</pre>
+
+!images/sri_u8_pi_i3.png!
+
+

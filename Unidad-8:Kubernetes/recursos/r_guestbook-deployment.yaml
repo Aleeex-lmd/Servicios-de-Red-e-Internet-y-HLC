@@ -21,12 +21,9 @@ spec:
       - name: contenedor-guestbook
         image: iesgn/guestbook
         resources:
-          requests:
-            memory: "256Mi"
-            cpu: "500m"
           limits:
-            memory: "512Mi"
-            cpu: "1000m"
-          ports:
+            memory: "128Mi" 
+            cpu: "500m" 
+        ports:
           - name: http-server
             containerPort: 5000
